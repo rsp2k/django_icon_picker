@@ -318,5 +318,165 @@
       "name": "Rocket Launch",
       "icon": "mdi:rocket-launch"
     }
+  },
+  {
+    "model": "example.examplemodel",
+    "pk": 41,
+    "fields": {
+      "name": "😀 Happy Face",
+      "icon": "😀"
+    }
+  },
+  {
+    "model": "example.examplemodel",
+    "pk": 42,
+    "fields": {
+      "name": "❤️ Red Heart",
+      "icon": "❤️"
+    }
+  },
+  {
+    "model": "example.examplemodel",
+    "pk": 43,
+    "fields": {
+      "name": "🎉 Party Celebration",
+      "icon": "🎉"
+    }
+  },
+  {
+    "model": "example.examplemodel",
+    "pk": 44,
+    "fields": {
+      "name": "👍 Thumbs Up",
+      "icon": "👍"
+    }
+  },
+  {
+    "model": "example.examplemodel",
+    "pk": 45,
+    "fields": {
+      "name": "🔥 Fire",
+      "icon": "🔥"
+    }
+  },
+  {
+    "model": "example.examplemodel",
+    "pk": 46,
+    "fields": {
+      "name": "🚀 Rocket",
+      "icon": "🚀"
+    }
+  },
+  {
+    "model": "example.examplemodel",
+    "pk": 47,
+    "fields": {
+      "name": "⭐ Star",
+      "icon": "⭐"
+    }
+  },
+  {
+    "model": "example.examplemodel",
+    "pk": 48,
+    "fields": {
+      "name": "⚠️ Warning",
+      "icon": "⚠️"
+    }
+  },
+  {
+    "model": "example.examplemodel",
+    "pk": 49,
+    "fields": {
+      "name": "✅ Check Mark",
+      "icon": "✅"
+    }
+  },
+  {
+    "model": "example.examplemodel",
+    "pk": 50,
+    "fields": {
+      "name": "📱 Mobile Phone",
+      "icon": "📱"
+    }
+  },
+  {
+    "model": "example.examplemodel",
+    "pk": 51,
+    "fields": {
+      "name": "📧 Email",
+      "icon": "📧"
+    }
+  },
+  {
+    "model": "example.examplemodel",
+    "pk": 52,
+    "fields": {
+      "name": "📅 Calendar",
+      "icon": "📅"
+    }
+  },
+  {
+    "model": "example.examplemodel",
+    "pk": 53,
+    "fields": {
+      "name": "💰 Money Bag",
+      "icon": "💰"
+    }
+  },
+  {
+    "model": "example.examplemodel",
+    "pk": 54,
+    "fields": {
+      "name": "💡 Light Bulb",
+      "icon": "💡"
+    }
+  },
+  {
+    "model": "example.examplemodel",
+    "pk": 55,
+    "fields": {
+      "name": "🍕 Pizza",
+      "icon": "🍕"
+    }
+  },
+  {
+    "model": "example.examplemodel",
+    "pk": 56,
+    "fields": {
+      "name": "☕ Coffee",
+      "icon": "☕"
+    }
+  },
+  {
+    "model": "example.examplemodel",
+    "pk": 57,
+    "fields": {
+      "name": "🚗 Car",
+      "icon": "🚗"
+    }
+  },
+  {
+    "model": "example.examplemodel",
+    "pk": 58,
+    "fields": {
+      "name": "🏠 House",
+      "icon": "🏠"
+    }
+  },
+  {
+    "model": "example.examplemodel",
+    "pk": 59,
+    "fields": {
+      "name": "☀️ Sun",
+      "icon": "☀️"
+    }
+  },
+  {
+    "model": "example.examplemodel",
+    "pk": 60,
+    "fields": {
+      "name": "🎵 Musical Note",
+      "icon": "🎵"
+    }
   }
 ]
