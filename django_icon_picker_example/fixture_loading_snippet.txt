@@ -1,0 +1,7 @@
+        echo "=== Loading test fixtures for better screenshots ==="
+        python manage.py loaddata example/fixtures/comprehensive_test_data.json --settings=django_icon_picker_example.settings_debug
+        echo "✅ Test fixtures loaded successfully - $(python manage.py shell --settings=django_icon_picker_example.settings_debug -c "from example.models import ExampleModel; print(f'{ExampleModel.objects.count()} example models loaded (icons + emojis)')")"
+        
+        # Also verify emoji vs icon breakdown
+        echo "📊 Content breakdown:"
+        python manage.py load_test_data --verify-only --settings=django_icon_picker_example.settings_debug
