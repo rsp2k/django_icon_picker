@@ -5,6 +5,7 @@ from django.core.management.base import BaseCommand
 from django.core.management import call_command
 from django.db import transaction
 from example.models import ExampleModel
+import re
 
 
 class Command(BaseCommand):
@@ -78,8 +79,50 @@ class Command(BaseCommand):
             )
             raise
 
+    def is_emoji(self, text):
+        """Check if a string contains emoji characters."""
+        # Basic emoji detection pattern
+        emoji_pattern = re.compile(
+            "["
+            "\U0001F600-\U0001F64F"  # emoticons
+            "\U0001F300-\U0001F5FF"  # symbols & pictographs
+            "\U0001F680-\U0001F6FF"  # transport & map
+            "\U0001F1E0-\U0001F1FF"  # flags (iOS)
+            "\U00002702-\U000027B0"  # misc symbols
+            "\U000024C2-\U0001F251"  # enclosed characters
+            "]+", flags=re.UNICODE
+        )
+        return bool(emoji_pattern.search(text))
+
+    def categorize_icons(self):
+        """Categorize icons into emojis vs icon sets."""
+        all_objects = ExampleModel.objects.all()
+        
+        categories = {
+            'emojis': [],
+            'material-symbols': [],
+            'fa-brands': [],
+            'heroicons': [],
+            'mdi': [],
+            'other': []
+        }
+        
+        for obj in all_objects:
+            if self.is_emoji(obj.icon):
+                categories['emojis'].append(obj)
+            elif ':' in obj.icon:
+                icon_set = obj.icon.split(':')[0]
+                if icon_set in categories:
+                    categories[icon_set].append(obj)
+                else:
+                    categories['other'].append(obj)
+            else:
+                categories['other'].append(obj)
+                
+        return categories
+
     def verify_data(self):
-        """Verify the loaded data."""
+        """Verify the loaded data with enhanced emoji support."""
         self.stdout.write('🔍 Verifying loaded data...')
         
         total_count = ExampleModel.objects.count()
@@ -90,27 +133,42 @@ class Command(BaseCommand):
             )
             return
             
-        # Group by icon set
-        icon_sets = {}
-        for obj in ExampleModel.objects.all():
-            if ':' in obj.icon:
-                icon_set = obj.icon.split(':')[0]
-                if icon_set not in icon_sets:
-                    icon_sets[icon_set] = []
-                icon_sets[icon_set].append(obj)
-            else:
-                if 'other' not in icon_sets:
-                    icon_sets['other'] = []
-                icon_sets['other'].append(obj)
+        # Categorize by type
+        categories = self.categorize_icons()
         
         self.stdout.write(f'   📊 Total records: {total_count}')
         
-        for icon_set, objects in icon_sets.items():
-            self.stdout.write(f'   📁 {icon_set}: {len(objects)} icons')
-            
+        # Report on each category
+        for category, objects in categories.items():
+            if objects:
+                if category == 'emojis':
+                    self.stdout.write(f'   😀 {category}: {len(objects)} emojis')
+                    # Show first few emojis as examples
+                    sample_emojis = [obj.icon for obj in objects[:5]]
+                    self.stdout.write(f'      Examples: {" ".join(sample_emojis)}')
+                else:
+                    self.stdout.write(f'   📁 {category}: {len(objects)} icons')
+        
         # Check for any empty icons or names
         empty_icons = ExampleModel.objects.filter(icon='').count()
         empty_names = ExampleModel.objects.filter(name='').count()
+        
+        # Check for emoji vs icon mix
+        emoji_count = len(categories['emojis'])
+        icon_count = total_count - emoji_count
+        
+        if emoji_count > 0 and icon_count > 0:
+            self.stdout.write(
+                self.style.SUCCESS(f'   🎯 Mixed content: {emoji_count} emojis + {icon_count} icons')
+            )
+        elif emoji_count > 0:
+            self.stdout.write(
+                self.style.SUCCESS(f'   😀 Emoji-only dataset: {emoji_count} emojis')
+            )
+        elif icon_count > 0:
+            self.stdout.write(
+                self.style.SUCCESS(f'   🎨 Icon-only dataset: {icon_count} icons')
+            )
         
         if empty_icons > 0:
             self.stdout.write(
@@ -130,22 +188,33 @@ class Command(BaseCommand):
     def display_summary(self):
         """Display a summary of available fixtures and usage."""
         self.stdout.write('\n📋 Available Fixtures:')
-        self.stdout.write('   • comprehensive_test_data.json - 40 diverse icons (recommended)')
-        self.stdout.write('   • basic_icons.json - 15 Material Symbols icons')
-        self.stdout.write('   • brand_icons.json - 10 Font Awesome brand icons')
-        self.stdout.write('   • heroicons.json - 10 Heroicons')
+        self.stdout.write('   🎯 comprehensive_test_data.json - 60 mixed icons + emojis (recommended)')
+        self.stdout.write('   😀 emoji_categories.json - 50 emojis across all categories')
+        self.stdout.write('   🎉 emoji_showcase.json - 20 popular emojis')
+        self.stdout.write('   🔄 mixed_icons_emojis.json - 20 icon vs emoji comparisons')
+        self.stdout.write('   📱 basic_icons.json - 15 Material Symbols icons')
+        self.stdout.write('   🔗 brand_icons.json - 10 Font Awesome brand icons')
+        self.stdout.write('   🎨 heroicons.json - 10 Heroicons')
         
         self.stdout.write('\n🚀 Usage Examples:')
         self.stdout.write('   python manage.py load_test_data')
-        self.stdout.write('   python manage.py load_test_data --fixture=basic_icons')
+        self.stdout.write('   python manage.py load_test_data --fixture=emoji_categories')
+        self.stdout.write('   python manage.py load_test_data --fixture=mixed_icons_emojis')
         self.stdout.write('   python manage.py load_test_data --clear')
         self.stdout.write('   python manage.py load_test_data --verify-only')
         
         self.stdout.write('\n🎯 Next Steps:')
-        self.stdout.write('   1. Visit /admin/ to see the icon picker in action')
-        self.stdout.write('   2. Navigate to /admin/example/examplemodel/ to see the icon list')
-        self.stdout.write('   3. Try adding a new model with /admin/example/examplemodel/add/')
+        self.stdout.write('   1. Visit /admin/ to see both icons and emojis in action')
+        self.stdout.write('   2. Navigate to /admin/example/examplemodel/ to see the mixed list')
+        self.stdout.write('   3. Try /admin/example/examplemodel/add/ for emoji picker demo')
+        self.stdout.write('   4. Toggle between icon and emoji modes in the picker')
+        
+        self.stdout.write('\n💡 Pro Tips:')
+        self.stdout.write('   • Emojis render instantly on all devices')
+        self.stdout.write('   • Icons can be customized with colors')
+        self.stdout.write('   • Use mixed fixtures to showcase dual functionality')
+        self.stdout.write('   • Emoji categories cover all use cases mentioned in README')
         
         self.stdout.write(
-            self.style.SUCCESS('\n🎉 Ready for screenshot testing!')
+            self.style.SUCCESS('\n🎉 Ready for emoji + icon screenshot testing!')
         )
