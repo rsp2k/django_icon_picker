@@ -240,7 +240,7 @@ jobs:
           exit 1
         fi
 
-    - name: Create enhanced screenshot script
+    - name: Create enhanced screenshot script with icon picker interaction
       run: |
         cat > take_screenshots_with_logging.py << 'EOF'
         #!/usr/bin/env python3
@@ -359,36 +359,126 @@ jobs:
                             
             return False
 
-        def create_sample_model_with_icons(page):
+        def interact_with_icon_picker(page):
             """
-            Attempt to create a sample model instance that demonstrates the icon picker.
+            Interact with the icon picker field and demonstrate its functionality.
             """
             try:
-                logger.info("Attempting to create sample model with icon picker...")
+                logger.info("Looking for icon picker field...")
+                
+                # Wait for form to load
+                page.wait_for_selector('.form-row', timeout=10000)
+                
+                # Look for the icon field specifically
+                icon_field = page.query_selector('input[name="icon"]')
+                if not icon_field:
+                    logger.warning("Icon field not found by name, trying by ID...")
+                    icon_field = page.query_selector('input[id*="icon"]')
+                
+                if icon_field:
+                    logger.info("Found icon field, attempting to interact with icon picker...")
+                    
+                    # Click on the icon field to potentially open the picker
+                    icon_field.click()
+                    page.wait_for_timeout(1500)  # Wait for picker to appear
+                    
+                    # Look for icon picker modal or interface
+                    picker_selectors = [
+                        '.icon-picker-modal',
+                        '.icon-picker',
+                        '[class*="icon-picker"]',
+                        '.modal',
+                        '[role="dialog"]'
+                    ]
+                    
+                    picker_found = False
+                    for selector in picker_selectors:
+                        if page.query_selector(selector):
+                            logger.info(f"Icon picker interface found with selector: {selector}")
+                            picker_found = True
+                            break
+                    
+                    if picker_found:
+                        # Try to select an icon from the picker
+                        # Look for icon buttons or selectable icons
+                        icon_buttons = page.query_selector_all('.icon-option, .icon-button, [data-icon], .emoji, [class*="icon-"]')
+                        
+                        if icon_buttons and len(icon_buttons) > 0:
+                            # Click on the first available icon
+                            icon_buttons[0].click()
+                            logger.info("Selected an icon from the picker")
+                            page.wait_for_timeout(1000)
+                            
+                            # Look for and click any confirm/ok button
+                            confirm_buttons = page.query_selector_all('button:has-text("OK"), button:has-text("Select"), button:has-text("Choose"), .btn-primary')
+                            if confirm_buttons:
+                                confirm_buttons[0].click()
+                                logger.info("Confirmed icon selection")
+                                page.wait_for_timeout(500)
+                        else:
+                            logger.warning("No selectable icons found in picker")
+                    else:
+                        # If no picker UI found, try to fill the field directly with a sample icon
+                        logger.info("No picker UI found, filling field directly with sample icon...")
+                        icon_field.fill('material-symbols:star')
+                        page.wait_for_timeout(500)
+                        
+                    # Check if the field now has a value
+                    field_value = icon_field.get_attribute('value') or ''
+                    if field_value:
+                        logger.info(f"Icon field now contains: {field_value}")
+                    else:
+                        logger.warning("Icon field appears to be empty after interaction")
+                        
+                else:
+                    logger.warning("Could not find icon field on the page")
+                    
+            except Exception as e:
+                logger.error(f"Error interacting with icon picker: {e}")
+
+        def fill_form_fields(page):
+            """
+            Fill in other form fields for a complete demo.
+            """
+            try:
+                logger.info("Filling form fields...")
+                
+                # Fill name field
+                name_selectors = ['input[name="name"]', 'input[name="title"]', 'input[id*="name"]', 'input[id*="title"]']
+                for selector in name_selectors:
+                    name_field = page.query_selector(selector)
+                    if name_field:
+                        name_field.fill("Screenshot Demo - Icon Picker Test")
+                        logger.info(f"Filled name field using selector: {selector}")
+                        break
+                
+                # Interact with icon picker
+                interact_with_icon_picker(page)
+                
+                # Wait a moment for any UI updates
+                page.wait_for_timeout(1000)
+                
+            except Exception as e:
+                logger.warning(f"Error filling form fields: {e}")
+
+        def create_sample_model_with_icons(page):
+            """
+            Navigate to add page and demonstrate icon picker functionality.
+            """
+            try:
+                logger.info("Demonstrating icon picker on add page...")
                 
                 # Navigate to the add page
                 page.goto(f"{BASE_URL}/admin/example/examplemodel/add/")
-                page.wait_for_selector('input, textarea, select', timeout=10000)
+                page.wait_for_selector('.form-row, input, textarea', timeout=10000)
                 
-                # Try to fill in form fields if they exist
-                try:
-                    # Look for common form fields
-                    name_field = page.query_selector('input[name="name"], input[name="title"], input[id*="name"], input[id*="title"]')
-                    if name_field:
-                        name_field.fill("Sample Icon Picker Demo")
-                        
-                    # Look for the icon picker field
-                    icon_field = page.query_selector('input[name="icon"], input[id*="icon"]')
-                    if icon_field:
-                        # Click on icon field to potentially trigger icon picker
-                        icon_field.click()
-                        page.wait_for_timeout(1000)  # Wait for any picker to appear
-                        
-                except Exception as e:
-                    logger.warning(f"Could not interact with form fields: {e}")
+                # Fill in the form to demonstrate the icon picker
+                fill_form_fields(page)
+                
+                logger.info("Form interaction completed")
                     
             except Exception as e:
-                logger.warning(f"Could not create sample model: {e}")
+                logger.warning(f"Could not demonstrate icon picker: {e}")
 
         def main():
             if not os.path.exists(OUTPUT_DIR):
@@ -463,9 +553,9 @@ jobs:
             main()
         EOF
 
-    - name: Take screenshots with enhanced logging
+    - name: Take screenshots with enhanced icon picker interaction
       run: |
-        echo "=== Starting screenshot capture with enhanced logging ==="
+        echo "=== Starting screenshot capture with enhanced icon picker interaction ==="
         python take_screenshots_with_logging.py
       env:
         DJANGO_SUPERUSER_USERNAME: screenshots
@@ -513,6 +603,7 @@ jobs:
         Django Log Level: $DJANGO_LOG_LEVEL
         
         Test Data: 40 diverse icon examples loaded from fixtures
+        Enhanced Features: Icon picker interaction and form filling
         
         Files Generated:
         $(find screenshots -name "*.png" 2>/dev/null | sort || echo "No screenshots found")
