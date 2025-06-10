@@ -12,7 +12,7 @@ URLS_TO_SCREENSHOT = [
     '/admin/',  # Django admin login page
     '/admin/example/',  # Example app admin
     '/admin/example/examplemodel/',  # Example model admin list
-    '/icon_picker/download-svg/',  # Icon picker endpoint (might be a POST-only endpoint)
+    '/admin/example/examplemodel/add/',  # Add new example model (should show icon picker)
 ]
 
 OUTPUT_DIR = 'screenshots'
@@ -68,6 +68,14 @@ def take_screenshot_with_retry(page, url_path, filename, retries=2):
             # Wait a bit for any dynamic content to load
             page.wait_for_timeout(2000)
             
+            # For admin pages, wait for Django admin CSS to load for better screenshots
+            if '/admin/' in url_path:
+                try:
+                    # Wait for admin styles to load
+                    page.wait_for_selector('.breadcrumbs, #header, .module', timeout=5000)
+                except:
+                    pass  # Continue even if admin elements don't load
+            
             # Take the screenshot
             page.screenshot(path=filename, full_page=True)
             print(f"Screenshot saved: {filename}")
@@ -90,6 +98,37 @@ def take_screenshot_with_retry(page, url_path, filename, retries=2):
                     pass
                     
     return False
+
+def create_sample_model_with_icons(page):
+    """
+    Attempt to create a sample model instance that demonstrates the icon picker.
+    """
+    try:
+        print("Attempting to create sample model with icon picker...")
+        
+        # Navigate to the add page
+        page.goto(f"{BASE_URL}/admin/example/examplemodel/add/")
+        page.wait_for_selector('input, textarea, select', timeout=10000)
+        
+        # Try to fill in form fields if they exist
+        try:
+            # Look for common form fields
+            name_field = page.query_selector('input[name="name"], input[name="title"], input[id*="name"], input[id*="title"]')
+            if name_field:
+                name_field.fill("Sample Icon Picker Demo")
+                
+            # Look for the icon picker field
+            icon_field = page.query_selector('input[name="icon"], input[id*="icon"]')
+            if icon_field:
+                # Click on icon field to potentially trigger icon picker
+                icon_field.click()
+                page.wait_for_timeout(1000)  # Wait for any picker to appear
+                
+        except Exception as e:
+            print(f"Could not interact with form fields: {e}")
+            
+    except Exception as e:
+        print(f"Could not create sample model: {e}")
 
 def main():
     if not os.path.exists(OUTPUT_DIR):
@@ -122,6 +161,10 @@ def main():
             if '/admin/' in url_path and url_path != '/admin/' and not admin_logged_in:
                 print(f"Skipping {url_path} - admin login required but not available")
                 continue
+            
+            # Special handling for the add page to demonstrate icon picker
+            if url_path.endswith('/add/') and admin_logged_in:
+                create_sample_model_with_icons(page)
             
             success = take_screenshot_with_retry(page, url_path, filename)
             screenshot_results.append({
