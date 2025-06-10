@@ -1,60 +1,351 @@
-.icon-dropdown-list {
+/* Icon Picker Styles */
+
+/* Mode Toggle Buttons */
+.icon-picker-mode-toggle {
+  display: flex;
+  gap: 5px;
+  margin-bottom: 10px;
+  border-radius: 6px;
+  padding: 2px;
+  background: #f0f0f0;
+  border: 1px solid #ddd;
+}
+
+.mode-btn {
+  flex: 1;
+  padding: 8px 12px;
+  border: none;
+  background: transparent;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 14px;
+  color: #666;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.mode-btn span {
+  font-size: 16px;
+}
+
+.mode-btn:hover {
+  background: rgba(0, 188, 201, 0.1);
+  color: #00bcc9;
+}
+
+.mode-btn.active {
+  background: #00bcc9;
+  color: white;
+  box-shadow: 0 2px 4px rgba(0, 188, 201, 0.3);
+}
+
+/* Dark mode support */
+.dark .icon-picker-mode-toggle,
+[data-theme="dark"] .icon-picker-mode-toggle {
+  background: #444;
+  border-color: #555;
+}
+
+.dark .mode-btn,
+[data-theme="dark"] .mode-btn {
+  color: #ccc;
+}
+
+.dark .mode-btn:hover,
+[data-theme="dark"] .mode-btn:hover {
+  background: rgba(0, 188, 201, 0.2);
+  color: #00bcc9;
+}
+
+/* Dropdown Lists */
+.icon-dropdown-list,
+.emoji-dropdown-list {
   max-height: 300px;
-  max-width: 300px;
+  max-width: 400px;
   overflow-y: auto;
   border: 1px solid #ddd;
-  border-radius: 4px;
+  border-radius: 6px;
   background: white;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  margin-top: 4px;
+  z-index: 1000;
 }
 
-.dark .icon-dropdown-list {
+.dark .icon-dropdown-list,
+.dark .emoji-dropdown-list,
+[data-theme="dark"] .icon-dropdown-list,
+[data-theme="dark"] .emoji-dropdown-list {
   background: #333;
-  border: 1px solid #333;
+  border: 1px solid #555;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
-[data-theme="dark"] .icon-dropdown-list {
-  background: #333;
-  border: 1px solid #333;
-}
-
+/* Icon Dropdown Items */
 .icon-dropdown-item {
   display: flex;
   align-items: center;
-  padding: 8px 12px;
+  padding: 10px 14px;
   cursor: pointer;
-  transition: background-color 0.2s;
+  transition: background-color 0.2s ease;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.icon-dropdown-item:last-child {
+  border-bottom: none;
 }
 
 .icon-dropdown-item:hover {
-  background-color: #f5f5f5;
+  background-color: #f8f9fa;
 }
 
-.dark .icon-dropdown-item:hover {
-  background-color: #333;
+.dark .icon-dropdown-item,
+[data-theme="dark"] .icon-dropdown-item {
+  border-bottom-color: #444;
 }
 
+.dark .icon-dropdown-item:hover,
 [data-theme="dark"] .icon-dropdown-item:hover {
-  background-color: #333;
+  background-color: #404040;
 }
 
 .icon-preview {
   width: 24px;
   height: 24px;
   margin-right: 12px;
+  flex-shrink: 0;
 }
 
 .icon-name {
   font-size: 14px;
   color: #333;
+  font-weight: 500;
 }
 
-.dark .icon-name {
-  font-size: 14px;
-  color: #fff;
-}
-
+.dark .icon-name,
 [data-theme="dark"] .icon-name {
-  font-size: 14px;
   color: #fff;
+}
+
+/* Emoji Dropdown Items */
+.emoji-dropdown-item {
+  display: flex;
+  align-items: center;
+  padding: 12px 14px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.emoji-dropdown-item:last-child {
+  border-bottom: none;
+}
+
+.emoji-dropdown-item:hover {
+  background-color: #f8f9fa;
+}
+
+.dark .emoji-dropdown-item,
+[data-theme="dark"] .emoji-dropdown-item {
+  border-bottom-color: #444;
+}
+
+.dark .emoji-dropdown-item:hover,
+[data-theme="dark"] .emoji-dropdown-item:hover {
+  background-color: #404040;
+}
+
+.emoji-preview {
+  font-size: 24px;
+  margin-right: 12px;
+  flex-shrink: 0;
+  width: 32px;
+  text-align: center;
+}
+
+.emoji-text-container {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1;
+}
+
+.emoji-name {
+  font-size: 14px;
+  color: #333;
+  font-weight: 500;
+  text-transform: capitalize;
+}
+
+.emoji-keywords {
+  font-size: 12px;
+  color: #666;
+  font-style: italic;
+}
+
+.dark .emoji-name,
+[data-theme="dark"] .emoji-name {
+  color: #fff;
+}
+
+.dark .emoji-keywords,
+[data-theme="dark"] .emoji-keywords {
+  color: #aaa;
+}
+
+/* No Results and Error States */
+.no-results,
+.error {
+  padding: 20px;
+  text-align: center;
+  color: #666;
+  font-style: italic;
+}
+
+.error {
+  color: #e74c3c;
+}
+
+.dark .no-results,
+[data-theme="dark"] .no-results {
+  color: #aaa;
+}
+
+.dark .error,
+[data-theme="dark"] .error {
+  color: #ff6b6b;
+}
+
+/* Icon Picker Container Enhancements */
+.icon-picker-container {
+  position: relative;
+}
+
+.icon-picker-input {
+  position: relative;
+}
+
+/* Enhanced Selected Icon Display */
+#selectedIcon {
+  border-radius: 4px;
+  border: 2px solid #e0e0e0;
+  padding: 4px;
+  background: #f9f9f9;
+  transition: all 0.2s ease;
+}
+
+#selectedIcon:not(:empty) {
+  border-color: #00bcc9;
+  background: #f0fffe;
+}
+
+.dark #selectedIcon,
+[data-theme="dark"] #selectedIcon {
+  background: #444;
+  border-color: #555;
+}
+
+.dark #selectedIcon:not(:empty),
+[data-theme="dark"] #selectedIcon:not(:empty) {
+  background: #2a3a3a;
+  border-color: #00bcc9;
+}
+
+/* Scrollbar Styling */
+.icon-dropdown-list::-webkit-scrollbar,
+.emoji-dropdown-list::-webkit-scrollbar {
+  width: 6px;
+}
+
+.icon-dropdown-list::-webkit-scrollbar-track,
+.emoji-dropdown-list::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 3px;
+}
+
+.icon-dropdown-list::-webkit-scrollbar-thumb,
+.emoji-dropdown-list::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 3px;
+}
+
+.icon-dropdown-list::-webkit-scrollbar-thumb:hover,
+.emoji-dropdown-list::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}
+
+.dark .icon-dropdown-list::-webkit-scrollbar-track,
+.dark .emoji-dropdown-list::-webkit-scrollbar-track,
+[data-theme="dark"] .icon-dropdown-list::-webkit-scrollbar-track,
+[data-theme="dark"] .emoji-dropdown-list::-webkit-scrollbar-track {
+  background: #2a2a2a;
+}
+
+.dark .icon-dropdown-list::-webkit-scrollbar-thumb,
+.dark .emoji-dropdown-list::-webkit-scrollbar-thumb,
+[data-theme="dark"] .icon-dropdown-list::-webkit-scrollbar-thumb,
+[data-theme="dark"] .emoji-dropdown-list::-webkit-scrollbar-thumb {
+  background: #555;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .icon-dropdown-list,
+  .emoji-dropdown-list {
+    max-width: 100%;
+    max-height: 250px;
+  }
+  
+  .icon-picker-mode-toggle {
+    flex-direction: column;
+    gap: 2px;
+  }
+  
+  .mode-btn {
+    padding: 10px;
+  }
+  
+  .emoji-preview {
+    font-size: 20px;
+    width: 28px;
+  }
+}
+
+/* Animation for smooth transitions */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.icon-dropdown-list,
+.emoji-dropdown-list {
+  animation: fadeIn 0.2s ease-out;
+}
+
+/* Focus and Accessibility */
+.mode-btn:focus,
+.icon-dropdown-item:focus,
+.emoji-dropdown-item:focus {
+  outline: 2px solid #00bcc9;
+  outline-offset: 2px;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .icon-dropdown-list,
+  .emoji-dropdown-list {
+    border-width: 2px;
+  }
+  
+  .mode-btn.active {
+    border: 2px solid #00bcc9;
+  }
 }
