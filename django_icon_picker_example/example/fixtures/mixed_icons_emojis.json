@@ -1,0 +1,162 @@
+[
+  {
+    "model": "example.examplemodel",
+    "pk": 301,
+    "fields": {
+      "name": "Home - Icon Style",
+      "icon": "material-symbols:home"
+    }
+  },
+  {
+    "model": "example.examplemodel",
+    "pk": 302,
+    "fields": {
+      "name": "Home - Emoji Style",
+      "icon": "🏠"
+    }
+  },
+  {
+    "model": "example.examplemodel",
+    "pk": 303,
+    "fields": {
+      "name": "Settings - Icon Style",
+      "icon": "material-symbols:settings"
+    }
+  },
+  {
+    "model": "example.examplemodel",
+    "pk": 304,
+    "fields": {
+      "name": "Settings - Emoji Style",
+      "icon": "⚙️"
+    }
+  },
+  {
+    "model": "example.examplemodel",
+    "pk": 305,
+    "fields": {
+      "name": "Mail - Icon Style",
+      "icon": "material-symbols:mail"
+    }
+  },
+  {
+    "model": "example.examplemodel",
+    "pk": 306,
+    "fields": {
+      "name": "Mail - Emoji Style",
+      "icon": "📧"
+    }
+  },
+  {
+    "model": "example.examplemodel",
+    "pk": 307,
+    "fields": {
+      "name": "Star - Icon Style",
+      "icon": "material-symbols:star"
+    }
+  },
+  {
+    "model": "example.examplemodel",
+    "pk": 308,
+    "fields": {
+      "name": "Star - Emoji Style",
+      "icon": "⭐"
+    }
+  },
+  {
+    "model": "example.examplemodel",
+    "pk": 309,
+    "fields": {
+      "name": "Phone - Icon Style",
+      "icon": "material-symbols:phone"
+    }
+  },
+  {
+    "model": "example.examplemodel",
+    "pk": 310,
+    "fields": {
+      "name": "Phone - Emoji Style",
+      "icon": "📱"
+    }
+  },
+  {
+    "model": "example.examplemodel",
+    "pk": 311,
+    "fields": {
+      "name": "Heart - Icon Style",
+      "icon": "heroicons:heart"
+    }
+  },
+  {
+    "model": "example.examplemodel",
+    "pk": 312,
+    "fields": {
+      "name": "Heart - Emoji Style",
+      "icon": "❤️"
+    }
+  },
+  {
+    "model": "example.examplemodel",
+    "pk": 313,
+    "fields": {
+      "name": "Fire - Icon Style",
+      "icon": "heroicons:fire"
+    }
+  },
+  {
+    "model": "example.examplemodel",
+    "pk": 314,
+    "fields": {
+      "name": "Fire - Emoji Style",
+      "icon": "🔥"
+    }
+  },
+  {
+    "model": "example.examplemodel",
+    "pk": 315,
+    "fields": {
+      "name": "Calendar - Icon Style",
+      "icon": "heroicons:calendar-days"
+    }
+  },
+  {
+    "model": "example.examplemodel",
+    "pk": 316,
+    "fields": {
+      "name": "Calendar - Emoji Style",
+      "icon": "📅"
+    }
+  },
+  {
+    "model": "example.examplemodel",
+    "pk": 317,
+    "fields": {
+      "name": "Music - Icon Style",
+      "icon": "heroicons:musical-note"
+    }
+  },
+  {
+    "model": "example.examplemodel",
+    "pk": 318,
+    "fields": {
+      "name": "Music - Emoji Style",
+      "icon": "🎵"
+    }
+  },
+  {
+    "model": "example.examplemodel",
+    "pk": 319,
+    "fields": {
+      "name": "Check - Icon Style",
+      "icon": "heroicons:check"
+    }
+  },
+  {
+    "model": "example.examplemodel",
+    "pk": 320,
+    "fields": {
+      "name": "Check - Emoji Style",
+      "icon": "✅"
+    }
+  }
+]
