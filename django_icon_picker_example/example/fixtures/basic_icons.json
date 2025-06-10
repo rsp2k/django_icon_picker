@@ -1,0 +1,122 @@
+[
+  {
+    "model": "example.examplemodel",
+    "pk": 1,
+    "fields": {
+      "name": "Home Dashboard",
+      "icon": "material-symbols:home"
+    }
+  },
+  {
+    "model": "example.examplemodel",
+    "pk": 2,
+    "fields": {
+      "name": "User Profile",
+      "icon": "material-symbols:person"
+    }
+  },
+  {
+    "model": "example.examplemodel",
+    "pk": 3,
+    "fields": {
+      "name": "Settings",
+      "icon": "material-symbols:settings"
+    }
+  },
+  {
+    "model": "example.examplemodel",
+    "pk": 4,
+    "fields": {
+      "name": "Notifications",
+      "icon": "material-symbols:notifications"
+    }
+  },
+  {
+    "model": "example.examplemodel",
+    "pk": 5,
+    "fields": {
+      "name": "Analytics",
+      "icon": "material-symbols:analytics"
+    }
+  },
+  {
+    "model": "example.examplemodel",
+    "pk": 6,
+    "fields": {
+      "name": "Messages",
+      "icon": "material-symbols:mail"
+    }
+  },
+  {
+    "model": "example.examplemodel",
+    "pk": 7,
+    "fields": {
+      "name": "Calendar",
+      "icon": "material-symbols:calendar-today"
+    }
+  },
+  {
+    "model": "example.examplemodel",
+    "pk": 8,
+    "fields": {
+      "name": "Documents",
+      "icon": "material-symbols:description"
+    }
+  },
+  {
+    "model": "example.examplemodel",
+    "pk": 9,
+    "fields": {
+      "name": "Search",
+      "icon": "material-symbols:search"
+    }
+  },
+  {
+    "model": "example.examplemodel",
+    "pk": 10,
+    "fields": {
+      "name": "Help & Support",
+      "icon": "material-symbols:help"
+    }
+  },
+  {
+    "model": "example.examplemodel",
+    "pk": 11,
+    "fields": {
+      "name": "Shopping Cart",
+      "icon": "material-symbols:shopping-cart"
+    }
+  },
+  {
+    "model": "example.examplemodel",
+    "pk": 12,
+    "fields": {
+      "name": "Favorites",
+      "icon": "material-symbols:star"
+    }
+  },
+  {
+    "model": "example.examplemodel",
+    "pk": 13,
+    "fields": {
+      "name": "Downloads",
+      "icon": "material-symbols:download"
+    }
+  },
+  {
+    "model": "example.examplemodel",
+    "pk": 14,
+    "fields": {
+      "name": "Security",
+      "icon": "material-symbols:security"
+    }
+  },
+  {
+    "model": "example.examplemodel",
+    "pk": 15,
+    "fields": {
+      "name": "Database",
+      "icon": "material-symbols:database"
+    }
+  }
+]
