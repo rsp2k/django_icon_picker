@@ -1,0 +1,162 @@
+[
+  {
+    "model": "example.examplemodel",
+    "pk": 101,
+    "fields": {
+      "name": "Happy Mood",
+      "icon": "😀"
+    }
+  },
+  {
+    "model": "example.examplemodel",
+    "pk": 102,
+    "fields": {
+      "name": "Love & Hearts",
+      "icon": "❤️"
+    }
+  },
+  {
+    "model": "example.examplemodel",
+    "pk": 103,
+    "fields": {
+      "name": "Celebration Time",
+      "icon": "🎉"
+    }
+  },
+  {
+    "model": "example.examplemodel",
+    "pk": 104,
+    "fields": {
+      "name": "Thumbs Up",
+      "icon": "👍"
+    }
+  },
+  {
+    "model": "example.examplemodel",
+    "pk": 105,
+    "fields": {
+      "name": "Fire Content",
+      "icon": "🔥"
+    }
+  },
+  {
+    "model": "example.examplemodel",
+    "pk": 106,
+    "fields": {
+      "name": "Rocket Launch",
+      "icon": "🚀"
+    }
+  },
+  {
+    "model": "example.examplemodel",
+    "pk": 107,
+    "fields": {
+      "name": "Star Rating",
+      "icon": "⭐"
+    }
+  },
+  {
+    "model": "example.examplemodel",
+    "pk": 108,
+    "fields": {
+      "name": "Warning Alert",
+      "icon": "⚠️"
+    }
+  },
+  {
+    "model": "example.examplemodel",
+    "pk": 109,
+    "fields": {
+      "name": "Checkmark Done",
+      "icon": "✅"
+    }
+  },
+  {
+    "model": "example.examplemodel",
+    "pk": 110,
+    "fields": {
+      "name": "Phone Contact",
+      "icon": "📱"
+    }
+  },
+  {
+    "model": "example.examplemodel",
+    "pk": 111,
+    "fields": {
+      "name": "Email Message",
+      "icon": "📧"
+    }
+  },
+  {
+    "model": "example.examplemodel",
+    "pk": 112,
+    "fields": {
+      "name": "Calendar Event",
+      "icon": "📅"
+    }
+  },
+  {
+    "model": "example.examplemodel",
+    "pk": 113,
+    "fields": {
+      "name": "Money & Finance",
+      "icon": "💰"
+    }
+  },
+  {
+    "model": "example.examplemodel",
+    "pk": 114,
+    "fields": {
+      "name": "Light Bulb Idea",
+      "icon": "💡"
+    }
+  },
+  {
+    "model": "example.examplemodel",
+    "pk": 115,
+    "fields": {
+      "name": "Pizza Food",
+      "icon": "🍕"
+    }
+  },
+  {
+    "model": "example.examplemodel",
+    "pk": 116,
+    "fields": {
+      "name": "Coffee Break",
+      "icon": "☕"
+    }
+  },
+  {
+    "model": "example.examplemodel",
+    "pk": 117,
+    "fields": {
+      "name": "Car Transportation",
+      "icon": "🚗"
+    }
+  },
+  {
+    "model": "example.examplemodel",
+    "pk": 118,
+    "fields": {
+      "name": "House & Home",
+      "icon": "🏠"
+    }
+  },
+  {
+    "model": "example.examplemodel",
+    "pk": 119,
+    "fields": {
+      "name": "Sunny Weather",
+      "icon": "☀️"
+    }
+  },
+  {
+    "model": "example.examplemodel",
+    "pk": 120,
+    "fields": {
+      "name": "Music & Sound",
+      "icon": "🎵"
+    }
+  }
+]
