@@ -1,0 +1,402 @@
+[
+  {
+    "model": "example.examplemodel",
+    "pk": 201,
+    "fields": {
+      "name": "😀 Happy Face",
+      "icon": "😀"
+    }
+  },
+  {
+    "model": "example.examplemodel",
+    "pk": 202,
+    "fields": {
+      "name": "😃 Grinning Face",
+      "icon": "😃"
+    }
+  },
+  {
+    "model": "example.examplemodel",
+    "pk": 203,
+    "fields": {
+      "name": "😊 Smiling Face",
+      "icon": "😊"
+    }
+  },
+  {
+    "model": "example.examplemodel",
+    "pk": 204,
+    "fields": {
+      "name": "🥳 Party Face",
+      "icon": "🥳"
+    }
+  },
+  {
+    "model": "example.examplemodel",
+    "pk": 205,
+    "fields": {
+      "name": "🤔 Thinking Face",
+      "icon": "🤔"
+    }
+  },
+  {
+    "model": "example.examplemodel",
+    "pk": 206,
+    "fields": {
+      "name": "😢 Sad Face",
+      "icon": "😢"
+    }
+  },
+  {
+    "model": "example.examplemodel",
+    "pk": 207,
+    "fields": {
+      "name": "👋 Hand Wave",
+      "icon": "👋"
+    }
+  },
+  {
+    "model": "example.examplemodel",
+    "pk": 208,
+    "fields": {
+      "name": "👍 Thumbs Up",
+      "icon": "👍"
+    }
+  },
+  {
+    "model": "example.examplemodel",
+    "pk": 209,
+    "fields": {
+      "name": "✋ Raised Hand",
+      "icon": "✋"
+    }
+  },
+  {
+    "model": "example.examplemodel",
+    "pk": 210,
+    "fields": {
+      "name": "❤️ Red Heart",
+      "icon": "❤️"
+    }
+  },
+  {
+    "model": "example.examplemodel",
+    "pk": 211,
+    "fields": {
+      "name": "💙 Blue Heart",
+      "icon": "💙"
+    }
+  },
+  {
+    "model": "example.examplemodel",
+    "pk": 212,
+    "fields": {
+      "name": "💚 Green Heart",
+      "icon": "💚"
+    }
+  },
+  {
+    "model": "example.examplemodel",
+    "pk": 213,
+    "fields": {
+      "name": "💜 Purple Heart",
+      "icon": "💜"
+    }
+  },
+  {
+    "model": "example.examplemodel",
+    "pk": 214,
+    "fields": {
+      "name": "🧡 Orange Heart",
+      "icon": "🧡"
+    }
+  },
+  {
+    "model": "example.examplemodel",
+    "pk": 215,
+    "fields": {
+      "name": "💛 Yellow Heart",
+      "icon": "💛"
+    }
+  },
+  {
+    "model": "example.examplemodel",
+    "pk": 216,
+    "fields": {
+      "name": "🎉 Party Popper",
+      "icon": "🎉"
+    }
+  },
+  {
+    "model": "example.examplemodel",
+    "pk": 217,
+    "fields": {
+      "name": "🎊 Confetti Ball",
+      "icon": "🎊"
+    }
+  },
+  {
+    "model": "example.examplemodel",
+    "pk": 218,
+    "fields": {
+      "name": "🏆 Trophy",
+      "icon": "🏆"
+    }
+  },
+  {
+    "model": "example.examplemodel",
+    "pk": 219,
+    "fields": {
+      "name": "🎯 Direct Hit",
+      "icon": "🎯"
+    }
+  },
+  {
+    "model": "example.examplemodel",
+    "pk": 220,
+    "fields": {
+      "name": "⚽ Soccer Ball",
+      "icon": "⚽"
+    }
+  },
+  {
+    "model": "example.examplemodel",
+    "pk": 221,
+    "fields": {
+      "name": "🎵 Musical Note",
+      "icon": "🎵"
+    }
+  },
+  {
+    "model": "example.examplemodel",
+    "pk": 222,
+    "fields": {
+      "name": "⭐ Star",
+      "icon": "⭐"
+    }
+  },
+  {
+    "model": "example.examplemodel",
+    "pk": 223,
+    "fields": {
+      "name": "🌟 Glowing Star",
+      "icon": "🌟"
+    }
+  },
+  {
+    "model": "example.examplemodel",
+    "pk": 224,
+    "fields": {
+      "name": "✨ Sparkles",
+      "icon": "✨"
+    }
+  },
+  {
+    "model": "example.examplemodel",
+    "pk": 225,
+    "fields": {
+      "name": "🔥 Fire",
+      "icon": "🔥"
+    }
+  },
+  {
+    "model": "example.examplemodel",
+    "pk": 226,
+    "fields": {
+      "name": "✅ Check Mark",
+      "icon": "✅"
+    }
+  },
+  {
+    "model": "example.examplemodel",
+    "pk": 227,
+    "fields": {
+      "name": "❌ Cross Mark",
+      "icon": "❌"
+    }
+  },
+  {
+    "model": "example.examplemodel",
+    "pk": 228,
+    "fields": {
+      "name": "⚠️ Warning",
+      "icon": "⚠️"
+    }
+  },
+  {
+    "model": "example.examplemodel",
+    "pk": 229,
+    "fields": {
+      "name": "ℹ️ Information",
+      "icon": "ℹ️"
+    }
+  },
+  {
+    "model": "example.examplemodel",
+    "pk": 230,
+    "fields": {
+      "name": "📱 Mobile Phone",
+      "icon": "📱"
+    }
+  },
+  {
+    "model": "example.examplemodel",
+    "pk": 231,
+    "fields": {
+      "name": "💻 Laptop",
+      "icon": "💻"
+    }
+  },
+  {
+    "model": "example.examplemodel",
+    "pk": 232,
+    "fields": {
+      "name": "⌚ Watch",
+      "icon": "⌚"
+    }
+  },
+  {
+    "model": "example.examplemodel",
+    "pk": 233,
+    "fields": {
+      "name": "📧 Email",
+      "icon": "📧"
+    }
+  },
+  {
+    "model": "example.examplemodel",
+    "pk": 234,
+    "fields": {
+      "name": "🔧 Wrench",
+      "icon": "🔧"
+    }
+  },
+  {
+    "model": "example.examplemodel",
+    "pk": 235,
+    "fields": {
+      "name": "🌈 Rainbow",
+      "icon": "🌈"
+    }
+  },
+  {
+    "model": "example.examplemodel",
+    "pk": 236,
+    "fields": {
+      "name": "☀️ Sun",
+      "icon": "☀️"
+    }
+  },
+  {
+    "model": "example.examplemodel",
+    "pk": 237,
+    "fields": {
+      "name": "🌙 Moon",
+      "icon": "🌙"
+    }
+  },
+  {
+    "model": "example.examplemodel",
+    "pk": 238,
+    "fields": {
+      "name": "🌳 Tree",
+      "icon": "🌳"
+    }
+  },
+  {
+    "model": "example.examplemodel",
+    "pk": 239,
+    "fields": {
+      "name": "🌸 Cherry Blossom",
+      "icon": "🌸"
+    }
+  },
+  {
+    "model": "example.examplemodel",
+    "pk": 240,
+    "fields": {
+      "name": "🍕 Pizza",
+      "icon": "🍕"
+    }
+  },
+  {
+    "model": "example.examplemodel",
+    "pk": 241,
+    "fields": {
+      "name": "🍔 Hamburger",
+      "icon": "🍔"
+    }
+  },
+  {
+    "model": "example.examplemodel",
+    "pk": 242,
+    "fields": {
+      "name": "☕ Coffee",
+      "icon": "☕"
+    }
+  },
+  {
+    "model": "example.examplemodel",
+    "pk": 243,
+    "fields": {
+      "name": "🍰 Cake",
+      "icon": "🍰"
+    }
+  },
+  {
+    "model": "example.examplemodel",
+    "pk": 244,
+    "fields": {
+      "name": "🥤 Soft Drink",
+      "icon": "🥤"
+    }
+  },
+  {
+    "model": "example.examplemodel",
+    "pk": 245,
+    "fields": {
+      "name": "🚀 Rocket",
+      "icon": "🚀"
+    }
+  },
+  {
+    "model": "example.examplemodel",
+    "pk": 246,
+    "fields": {
+      "name": "🚗 Car",
+      "icon": "🚗"
+    }
+  },
+  {
+    "model": "example.examplemodel",
+    "pk": 247,
+    "fields": {
+      "name": "✈️ Airplane",
+      "icon": "✈️"
+    }
+  },
+  {
+    "model": "example.examplemodel",
+    "pk": 248,
+    "fields": {
+      "name": "🚲 Bicycle",
+      "icon": "🚲"
+    }
+  },
+  {
+    "model": "example.examplemodel",
+    "pk": 249,
+    "fields": {
+      "name": "🏠 House",
+      "icon": "🏠"
+    }
+  },
+  {
+    "model": "example.examplemodel",
+    "pk": 250,
+    "fields": {
+      "name": "🎨 Artist Palette",
+      "icon": "🎨"
+    }
+  }
+]
