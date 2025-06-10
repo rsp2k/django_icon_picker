@@ -4,19 +4,37 @@
 
 <div class="icon-picker-container">
   <div class="icon-picker-wrapper">
+    <!-- Mode toggle will be dynamically inserted here by JavaScript -->
+    
     <div class="icon-picker-input" style="display: flex; align-items: center; gap: 10px;">
-      <!-- Fixed: Removed duplicate class attribute, added alt text and proper class merging -->
-      <img 
-        class="icon-preview {{ widget.attrs.selected_icon|default:'' }}" 
-        id="selectedIcon" 
-        alt="Selected icon preview"
-        style="margin-right: 10px; width: 24px; height: 24px; object-fit: contain;"
-        aria-label="Preview of selected icon">
+      <!-- Enhanced preview area that handles both icons and emojis -->
+      <div 
+        id="selectedIconContainer" 
+        class="selected-icon-container"
+        style="min-width: 32px; min-height: 32px; display: flex; align-items: center; justify-content: center;"
+        aria-label="Selected icon or emoji preview">
+        
+        <!-- Icon preview image (hidden when emoji is selected) -->
+        <img 
+          class="icon-preview {{ widget.attrs.selected_icon|default:'' }}" 
+          id="selectedIcon" 
+          alt="Selected icon preview"
+          style="width: 24px; height: 24px; object-fit: contain; display: block;"
+          aria-label="Preview of selected icon">
+        
+        <!-- Emoji preview text (hidden by default) -->
+        <span 
+          id="selectedEmoji" 
+          class="emoji-preview"
+          style="font-size: 24px; display: none;"
+          aria-label="Selected emoji">
+        </span>
+      </div>
       
-      <!-- Main text input for icon search -->
+      <!-- Main text input for icon/emoji search -->
       {% include "django/forms/widgets/text.html" %}
       
-      <!-- Color picker input with improved attributes -->
+      <!-- Color picker input (hidden for emoji mode) -->
       <input 
         class="{{ widget.attrs.class|default:'' }}" 
         id="color" 
@@ -26,7 +44,7 @@
         data-coloris 
         style="margin-left: 10px; min-width: 80px;"
         aria-label="Icon color picker"
-        title="Select icon color"
+        title="Select icon color (emojis don't use color)"
         placeholder="#00bcc9">
     </div>
     
@@ -35,7 +53,7 @@
       id="results" 
       class="icon-search-results"
       role="listbox"
-      aria-label="Icon search results"
+      aria-label="Search results"
       aria-live="polite">
     </div>
     
@@ -47,6 +65,15 @@
       role="alert"
       aria-live="assertive">
     </div>
+    
+    <!-- Help text -->
+    <div 
+      id="icon-picker-help" 
+      class="icon-picker-help"
+      style="font-size: 12px; color: #666; margin-top: 5px;"
+      aria-live="polite">
+      <span id="help-text">Search for icons or switch to emoji mode</span>
+    </div>
   </div>
 </div>
 
@@ -54,21 +81,53 @@
 <script>
   document.addEventListener("DOMContentLoaded", function () {
     try {
-      // Enhanced initialization with error handling
-      new IconPicker({
+      // Enhanced initialization with emoji support
+      const iconPicker = new IconPicker({
         searchInputId: "{{ widget.attrs.id }}",
         savePath: "{{ save_path|default:'' }}",
         model: "{{ widget.attrs.model_name|default:'' }}",
         objectId: "{{ object_id|default:'' }}",
         defaultColor: "{{ default_color|default:'#00bcc9' }}"
       });
+
+      // Update help text based on mode
+      const helpText = document.getElementById("help-text");
+      const originalText = helpText.textContent;
+      
+      // Listen for mode changes to update help text
+      document.addEventListener("iconPickerModeChange", function(event) {
+        if (event.detail.mode === "emojis") {
+          helpText.textContent = "Search emojis by name or keyword (e.g., 'happy', 'heart', 'fire')";
+        } else {
+          helpText.textContent = "Search for icons from thousands of available icons";
+        }
+      });
+
+      // Keyboard shortcuts
+      document.addEventListener("keydown", function(event) {
+        // Alt + I for icons, Alt + E for emojis
+        if (event.altKey && event.key.toLowerCase() === 'i') {
+          event.preventDefault();
+          const iconBtn = document.querySelector('[data-mode="icons"]');
+          if (iconBtn) iconBtn.click();
+        }
+        if (event.altKey && event.key.toLowerCase() === 'e') {
+          event.preventDefault();
+          const emojiBtn = document.querySelector('[data-mode="emojis"]');
+          if (emojiBtn) emojiBtn.click();
+        }
+      });
+
     } catch (error) {
       console.error("Failed to initialize IconPicker:", error);
       
       // Show user-friendly error message
       const errorDiv = document.getElementById("icon-picker-error");
       if (errorDiv) {
-        errorDiv.textContent = "Failed to load icon picker. Please refresh the page.";
+        errorDiv.innerHTML = `
+          <strong>Error:</strong> Failed to load icon picker. 
+          <a href="#" onclick="window.location.reload(); return false;">Refresh page</a> to try again.
+        `;
         errorDiv.style.display = "block";
       }
     }
