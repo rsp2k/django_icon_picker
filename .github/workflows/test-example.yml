@@ -184,11 +184,18 @@ jobs:
         SECRET_KEY = os.environ.get('SECRET_KEY', SECRET_KEY)
         EOF
 
-    - name: Prepare Django project
+    - name: Prepare Django project and load test data
       working-directory: ./django_icon_picker_example
       run: |
+        echo "=== Running Django migrations ==="
         python manage.py migrate --settings=django_icon_picker_example.settings_debug
+        
+        echo "=== Collecting static files ==="
         python manage.py collectstatic --noinput --settings=django_icon_picker_example.settings_debug
+        
+        echo "=== Loading test fixtures for better screenshots ==="
+        python manage.py loaddata example/fixtures/comprehensive_test_data.json --settings=django_icon_picker_example.settings_debug
+        echo "✅ Test fixtures loaded successfully - $(python manage.py shell --settings=django_icon_picker_example.settings_debug -c "from example.models import ExampleModel; print(f'{ExampleModel.objects.count()} example models loaded')")"
 
     - name: Create test superuser
       working-directory: ./django_icon_picker_example
@@ -504,6 +511,8 @@ jobs:
         Base URL: $BASE_URL
         Debug Mode: $DEBUG
         Django Log Level: $DJANGO_LOG_LEVEL
+        
+        Test Data: 40 diverse icon examples loaded from fixtures
         
         Files Generated:
         $(find screenshots -name "*.png" 2>/dev/null | sort || echo "No screenshots found")
