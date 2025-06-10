@@ -100,17 +100,17 @@ The emoji picker includes **80+ emojis** organized across categories:
 - **😀 Smileys & People**: Happy, sad, thinking, party faces and hand gestures  
 - **❤️ Hearts & Love**: Various colored hearts and love symbols
 - **🎉 Activities**: Party, celebrations, sports, and entertainment
-- **🌟 Symbols**: Stars, checkmarks, warnings, and common symbols  
-- **🔥 Objects**: Technology, tools, communication devices
+- **🔥 Symbols**: Stars, checkmarks, warnings, and common symbols  
+- **📱 Objects**: Technology, tools, communication devices
 - **🌈 Nature**: Weather, plants, celestial objects
 - **🍕 Food & Drink**: Popular foods, beverages, and treats
 - **🚀 Transport**: Vehicles, travel, and movement
 
 ### Search Examples:
-- Type **"happy"** → finds 😀, 😃, 😊, 🥳
-- Type **"heart"** → finds ❤️, 💙, 💚, 💛, 🧡, 💜
-- Type **"fire"** → finds 🔥
-- Type **"star"** → finds ⭐, 🌟, ✨
+- Type **"happy"** ➔ finds 😀, 😃, 😊, 🥳
+- Type **"heart"** ➔ finds ❤️, 💙, 💚, 💜, 🧡, 💛
+- Type **"fire"** ➔ finds 🔥
+- Type **"star"** ➔ finds ⭐, 🌟, ✨
 
 ## User Interface
 
@@ -161,6 +161,52 @@ model_instance.icon.is_icon_name()    # True if icon name (like 'mdi:home')
 </div>
 ```
 
+## Testing & Development
+
+### Test Fixtures
+
+The example project includes comprehensive test fixtures to demonstrate the icon picker:
+
+```bash
+cd django_icon_picker_example
+
+# Load comprehensive test data (40 diverse icons)
+python manage.py load_test_data
+
+# Load specific fixture sets
+python manage.py load_test_data --fixture=basic_icons
+python manage.py load_test_data --fixture=brand_icons
+python manage.py load_test_data --fixture=heroicons
+
+# Clear and reload data
+python manage.py load_test_data --clear
+
+# Verify existing data
+python manage.py load_test_data --verify-only
+```
+
+**Available Test Fixtures:**
+- `comprehensive_test_data.json` - 40 diverse icons across multiple icon sets
+- `basic_icons.json` - 15 Material Symbols icons for common UI elements
+- `brand_icons.json` - 10 Font Awesome brand icons for social platforms
+- `heroicons.json` - 10 modern outline-style icons
+
+### Icon Sets Demonstrated
+
+- **Material Symbols**: `material-symbols:home`, `material-symbols:settings`
+- **Font Awesome**: `fa-brands:github`, `fa-brands:twitter`
+- **Heroicons**: `heroicons:academic-cap`, `heroicons:camera`
+- **Material Design Icons**: `mdi:weather-sunny`, `mdi:heart`
+
+### Automated Testing
+
+The repository includes GitHub Actions that:
+- ✅ Run comprehensive Django tests across Python 3.9-3.12 and Django 4.2-5.1
+- 📸 Take automated screenshots of the admin interface
+- 🔍 Capture detailed DEBUG logs during testing
+- 📦 Save screenshots and logs as downloadable artifacts
+- 🎯 Load test fixtures for realistic demo data
+
 ## Configuration Options
 
 | Setting | Default | Description |
@@ -170,8 +216,8 @@ model_instance.icon.is_icon_name()    # True if icon name (like 'mdi:home')
 
 ## Browser Support
 
-- **Modern browsers**: Chrome 60+, Firefox 55+, Safari 12+, Edge 79+
-- **Mobile**: iOS Safari 12+, Chrome Mobile 60+
+- **Modern browsers**: Chrome 60+, Firefox 55+, Safari 10+, Edge 79+
+- **Mobile**: iOS Safari 10+, Chrome Mobile 60+
 - **Emoji support**: Native emoji rendering on all modern platforms
 
 ## Requirements
@@ -194,6 +240,8 @@ Contributions are welcome! Areas for improvement:
 - Icon pack integration
 - Custom emoji upload
 - Advanced search filters
+- Improved test coverage
+- Enhanced screenshot testing
 
 ## License
 
