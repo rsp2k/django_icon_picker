@@ -18,6 +18,7 @@ setup(
     long_description_content_type="text/markdown",
     install_requires=[
         "Django>=3.0",
+        "requests",
     ],
     package_data={
         "django_icon_picker": ["templates/django_icon_picker/icon_picker.html"],
