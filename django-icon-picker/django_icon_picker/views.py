@@ -10,7 +10,14 @@ def download_and_save_svg(request):
     model = request.GET.get("model")
     if request.user.is_superuser or request.user.has_perm(f"edit_{model}"):
         svg_icon = request.GET.get("icon")
-        color = request.GET.get("color").replace("#", "%23")
+        color = request.GET.get("color")
+        
+        # Handle None color parameter to prevent AttributeError
+        if color is not None:
+            color = color.replace("#", "%23")
+        else:
+            color = "%23000000"  # Default to black if no color specified
+            
         svg_url = f"https://api.iconify.design/{svg_icon}?color={color}"
         id = request.GET.get("id")
         # Define the path where you want to save the SVG file
