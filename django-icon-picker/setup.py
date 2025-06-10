@@ -18,7 +18,7 @@ setup(
     long_description_content_type="text/markdown",
     python_requires=">=3.9",
     install_requires=[
-        "Django>=3.0",
+        "Django>=3.0,<6.0",
         "requests",
     ],
     package_data={
@@ -29,6 +29,8 @@ setup(
         "Environment :: Web Environment",
         "Framework :: Django",
         "Framework :: Django :: 3.0",
+        "Framework :: Django :: 4.0",
+        "Framework :: Django :: 5.0",
         "Intended Audience :: Developers",
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
