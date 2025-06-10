@@ -1,0 +1,82 @@
+[
+  {
+    "model": "example.examplemodel",
+    "pk": 26,
+    "fields": {
+      "name": "Academic Cap",
+      "icon": "heroicons:academic-cap"
+    }
+  },
+  {
+    "model": "example.examplemodel",
+    "pk": 27,
+    "fields": {
+      "name": "Adjustments",
+      "icon": "heroicons:adjustments-horizontal"
+    }
+  },
+  {
+    "model": "example.examplemodel",
+    "pk": 28,
+    "fields": {
+      "name": "Archive Box",
+      "icon": "heroicons:archive-box"
+    }
+  },
+  {
+    "model": "example.examplemodel",
+    "pk": 29,
+    "fields": {
+      "name": "Arrow Path",
+      "icon": "heroicons:arrow-path"
+    }
+  },
+  {
+    "model": "example.examplemodel",
+    "pk": 30,
+    "fields": {
+      "name": "At Symbol",
+      "icon": "heroicons:at-symbol"
+    }
+  },
+  {
+    "model": "example.examplemodel",
+    "pk": 31,
+    "fields": {
+      "name": "Backspace",
+      "icon": "heroicons:backspace"
+    }
+  },
+  {
+    "model": "example.examplemodel",
+    "pk": 32,
+    "fields": {
+      "name": "Bug Ant",
+      "icon": "heroicons:bug-ant"
+    }
+  },
+  {
+    "model": "example.examplemodel",
+    "pk": 33,
+    "fields": {
+      "name": "Building Office",
+      "icon": "heroicons:building-office"
+    }
+  },
+  {
+    "model": "example.examplemodel",
+    "pk": 34,
+    "fields": {
+      "name": "Camera",
+      "icon": "heroicons:camera"
+    }
+  },
+  {
+    "model": "example.examplemodel",
+    "pk": 35,
+    "fields": {
+      "name": "Chat Bubble",
+      "icon": "heroicons:chat-bubble-left"
+    }
+  }
+]
