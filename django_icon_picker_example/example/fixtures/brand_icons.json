@@ -1,0 +1,82 @@
+[
+  {
+    "model": "example.examplemodel",
+    "pk": 16,
+    "fields": {
+      "name": "GitHub Repository",
+      "icon": "fa-brands:github"
+    }
+  },
+  {
+    "model": "example.examplemodel",
+    "pk": 17,
+    "fields": {
+      "name": "Twitter Profile",
+      "icon": "fa-brands:twitter"
+    }
+  },
+  {
+    "model": "example.examplemodel",
+    "pk": 18,
+    "fields": {
+      "name": "LinkedIn Network",
+      "icon": "fa-brands:linkedin"
+    }
+  },
+  {
+    "model": "example.examplemodel",
+    "pk": 19,
+    "fields": {
+      "name": "Discord Server",
+      "icon": "fa-brands:discord"
+    }
+  },
+  {
+    "model": "example.examplemodel",
+    "pk": 20,
+    "fields": {
+      "name": "YouTube Channel",
+      "icon": "fa-brands:youtube"
+    }
+  },
+  {
+    "model": "example.examplemodel",
+    "pk": 21,
+    "fields": {
+      "name": "Instagram Photos",
+      "icon": "fa-brands:instagram"
+    }
+  },
+  {
+    "model": "example.examplemodel",
+    "pk": 22,
+    "fields": {
+      "name": "Facebook Page",
+      "icon": "fa-brands:facebook"
+    }
+  },
+  {
+    "model": "example.examplemodel",
+    "pk": 23,
+    "fields": {
+      "name": "Docker Container",
+      "icon": "fa-brands:docker"
+    }
+  },
+  {
+    "model": "example.examplemodel",
+    "pk": 24,
+    "fields": {
+      "name": "Python Code",
+      "icon": "fa-brands:python"
+    }
+  },
+  {
+    "model": "example.examplemodel",
+    "pk": 25,
+    "fields": {
+      "name": "React App",
+      "icon": "fa-brands:react"
+    }
+  }
+]
