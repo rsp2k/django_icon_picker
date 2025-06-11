@@ -240,9 +240,9 @@ jobs:
           exit 1
         fi
 
-    - name: Create enhanced screenshot script with icon picker interaction
+    - name: Create enhanced screenshot script with video recording
       run: |
-        cat > take_screenshots_with_logging.py << 'EOF'
+        cat > take_screenshots_with_video.py << 'EOF'
         #!/usr/bin/env python3
         import os
         import sys
@@ -276,6 +276,7 @@ jobs:
         ]
 
         OUTPUT_DIR = 'screenshots'
+        VIDEO_DIR = 'videos'
 
         def login_to_admin_if_needed(page, username, password):
             """
@@ -374,7 +375,7 @@ jobs:
                 if not icon_field:
                     logger.warning("Icon field not found by name, trying by ID...")
                     icon_field = page.query_selector('input[id*="icon"]')
-                
+
                 if icon_field:
                     logger.info("Found icon field, attempting to interact with icon picker...")
                     
@@ -483,14 +484,17 @@ jobs:
         def main():
             if not os.path.exists(OUTPUT_DIR):
                 os.makedirs(OUTPUT_DIR)
+            if not os.path.exists(VIDEO_DIR):
+                os.makedirs(VIDEO_DIR)
 
             # Get credentials from environment variables
             DJANGO_SUPERUSER_USERNAME = os.environ.get('DJANGO_SUPERUSER_USERNAME')
             DJANGO_SUPERUSER_PASSWORD = os.environ.get('DJANGO_SUPERUSER_PASSWORD')
 
-            logger.info(f"Starting screenshot capture at {datetime.now()}")
+            logger.info(f"Starting screenshot capture with video recording at {datetime.now()}")
             logger.info(f"Base URL: {BASE_URL}")
             logger.info(f"Output directory: {OUTPUT_DIR}")
+            logger.info(f"Video directory: {VIDEO_DIR}")
 
             with sync_playwright() as p:
                 # Launch browser
@@ -498,8 +502,15 @@ jobs:
                     args=['--no-sandbox', '--disable-dev-shm-usage']  # Useful for CI environments
                 )
                 
-                # Create a new page with a larger viewport for better screenshots
-                page = browser.new_page(viewport={'width': 1920, 'height': 1080})
+                # Create browser context with video recording enabled
+                context = browser.new_context(
+                    viewport={'width': 1920, 'height': 1080},
+                    record_video_dir=VIDEO_DIR,
+                    record_video_size={'width': 1920, 'height': 1080}
+                )
+                
+                # Create a new page from the context
+                page = context.new_page()
                 
                 # Perform admin login if credentials are provided
                 admin_logged_in = login_to_admin_if_needed(page, DJANGO_SUPERUSER_USERNAME, DJANGO_SUPERUSER_PASSWORD)
@@ -518,7 +529,7 @@ jobs:
                     
                     # Special handling for the add page to demonstrate icon picker
                     if url_path.endswith('/add/') and admin_logged_in:
-                       create_sample_model_with_icons(page)
+                        create_sample_model_with_icons(page)
                     
                     success = take_screenshot_with_retry(page, url_path, filename)
                     screenshot_results.append({
@@ -527,11 +538,39 @@ jobs:
                         'success': success
                     })
 
+                # Close the page to finalize video recording
+                page.close()
+                
+                # Close the context to save the video
+                context.close()
+                
+                # Close the browser
                 browser.close()
+                
+                # Wait a moment for video files to be written
+                time.sleep(2)
+                
+                # List and rename video files for better identification
+                logger.info("Processing recorded videos...")
+                if os.path.exists(VIDEO_DIR):
+                    video_files = [f for f in os.listdir(VIDEO_DIR) if f.endswith('.webm')]
+                    if video_files:
+                        # Rename the video file to something more descriptive
+                        original_video = os.path.join(VIDEO_DIR, video_files[0])
+                        new_video_name = os.path.join(VIDEO_DIR, f"django_icon_picker_demo_{datetime.now().strftime('%Y%m%d_%H%M%S')}.webm")
+                        try:
+                            os.rename(original_video, new_video_name)
+                            logger.info(f"Video saved as: {new_video_name}")
+                        except Exception as e:
+                            logger.error(f"Failed to rename video: {e}")
+                    else:
+                        logger.warning("No video files found after recording")
+                else:
+                    logger.warning("Video directory not found")
                 
                 # Print summary
                 logger.info("\n" + "="*50)
-                logger.info("SCREENSHOT SUMMARY")
+                logger.info("SCREENSHOT AND VIDEO SUMMARY")
                 logger.info("="*50)
                 successful = sum(1 for r in screenshot_results if r['success'])
                 total = len(screenshot_results)
@@ -547,16 +586,16 @@ jobs:
                 elif successful < total:
                     logger.warning(f"\nWARNING: {total - successful} screenshots failed")
                 else:
-                    logger.info(f"\n🎉 All screenshots captured successfully!")
+                    logger.info(f"\n🎉 All screenshots and video captured successfully!")
 
         if __name__ == '__main__':
             main()
         EOF
 
-    - name: Take screenshots with enhanced icon picker interaction
+    - name: Take screenshots and record video with enhanced icon picker interaction
       run: |
-        echo "=== Starting screenshot capture with enhanced icon picker interaction ==="
-        python take_screenshots_with_logging.py
+        echo "=== Starting screenshot capture and video recording with enhanced icon picker interaction ==="
+        python take_screenshots_with_video.py
       env:
         DJANGO_SUPERUSER_USERNAME: screenshots
         DJANGO_SUPERUSER_PASSWORD: testpassword123
@@ -594,8 +633,8 @@ jobs:
         
         # Create a summary log
         cat > logs/summary.log << EOF
-        Screenshot Capture Summary
-        =========================
+        Screenshot and Video Capture Summary
+        ====================================
         Timestamp: $(date)
         Django Settings: django_icon_picker_example.settings_debug
         Base URL: $BASE_URL
@@ -603,10 +642,11 @@ jobs:
         Django Log Level: $DJANGO_LOG_LEVEL
         
         Test Data: 40 diverse icon examples loaded from fixtures
-        Enhanced Features: Icon picker interaction and form filling
+        Enhanced Features: Icon picker interaction, form filling, and video recording
         
         Files Generated:
         $(find screenshots -name "*.png" 2>/dev/null | sort || echo "No screenshots found")
+        $(find videos -name "*.webm" 2>/dev/null | sort || echo "No videos found")
         
         Log Files:
         $(find logs -name "*.log" 2>/dev/null | sort || echo "No log files found")
@@ -623,6 +663,14 @@ jobs:
         path: screenshots/
         retention-days: 30
 
+    - name: Upload videos as artifact
+      uses: actions/upload-artifact@v4
+      if: always()  # Upload even if previous steps fail
+      with:
+        name: django-icon-picker-videos
+        path: videos/
+        retention-days: 30
+
     - name: Upload debug logs as artifact
       uses: actions/upload-artifact@v4
       if: always()  # Upload even if previous steps fail
@@ -636,7 +684,7 @@ jobs:
       run: |
         echo "=== LOG SUMMARY ==="
         if [ -f logs/summary.log ]; then
-          cat logs/summary.log
+         cat logs/summary.log
         fi
         
         echo ""
@@ -645,6 +693,14 @@ jobs:
           ls -la screenshots/
         else
           echo "No screenshots directory found"
+        fi
+        
+        echo ""
+        echo "=== VIDEO FILES ==="
+        if [ -d videos ]; then
+          ls -la videos/
+        else
+          echo "No videos directory found"
         fi
         
         echo ""
