@@ -240,7 +240,7 @@ jobs:
           exit 1
         fi
 
-    - name: Create enhanced screenshot script with video recording
+    - name: Create enhanced screenshot script with meaningful video names
       run: |
         cat > take_screenshots_with_video.py << 'EOF'
         #!/usr/bin/env python3
@@ -481,6 +481,40 @@ jobs:
             except Exception as e:
                 logger.warning(f"Could not demonstrate icon picker: {e}")
 
+        def generate_meaningful_video_name(admin_logged_in, screenshot_results, timestamp):
+            """
+            Generate a meaningful video filename based on test execution.
+            """
+            # Base components
+            components = ["django_icon_picker"]
+            
+            # Add authentication status
+            if admin_logged_in:
+                components.append("full_admin_demo")
+            else:
+                components.append("public_pages_only")
+            
+            # Add page count
+            successful_screenshots = sum(1 for r in screenshot_results if r['success'])
+            components.append(f"{successful_screenshots}_pages")
+            
+            # Add special features tested
+            features = []
+            if admin_logged_in:
+                features.append("login")
+                # Check if we tested the add page (icon picker demo)
+                add_page_tested = any('/add/' in r['url'] for r in screenshot_results if r['success'])
+                if add_page_tested:
+                    features.append("icon_picker_interaction")
+            
+            if features:
+                components.append("_".join(features))
+            
+            # Add timestamp
+            components.append(timestamp)
+            
+            return "_".join(components) + ".webm"
+
         def main():
             if not os.path.exists(OUTPUT_DIR):
                 os.makedirs(OUTPUT_DIR)
@@ -491,10 +525,15 @@ jobs:
             DJANGO_SUPERUSER_USERNAME = os.environ.get('DJANGO_SUPERUSER_USERNAME')
             DJANGO_SUPERUSER_PASSWORD = os.environ.get('DJANGO_SUPERUSER_PASSWORD')
 
+            # Determine what features we can test
+            has_credentials = bool(DJANGO_SUPERUSER_USERNAME and DJANGO_SUPERUSER_PASSWORD)
+            timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
+
             logger.info(f"Starting screenshot capture with video recording at {datetime.now()}")
             logger.info(f"Base URL: {BASE_URL}")
             logger.info(f"Output directory: {OUTPUT_DIR}")
             logger.info(f"Video directory: {VIDEO_DIR}")
+            logger.info(f"Admin credentials available: {has_credentials}")
 
             with sync_playwright() as p:
                 # Launch browser
@@ -550,17 +589,35 @@ jobs:
                 # Wait a moment for video files to be written
                 time.sleep(2)
                 
-                # List and rename video files for better identification
+                # List and rename video files with meaningful names
                 logger.info("Processing recorded videos...")
                 if os.path.exists(VIDEO_DIR):
                     video_files = [f for f in os.listdir(VIDEO_DIR) if f.endswith('.webm')]
                     if video_files:
-                        # Rename the video file to something more descriptive
+                        # Generate meaningful filename based on test content
+                        meaningful_name = generate_meaningful_video_name(admin_logged_in, screenshot_results, timestamp)
+                        
+                        # Rename the video file
                         original_video = os.path.join(VIDEO_DIR, video_files[0])
-                        new_video_name = os.path.join(VIDEO_DIR, f"django_icon_picker_demo_{datetime.now().strftime('%Y%m%d_%H%M%S')}.webm")
+                        new_video_path = os.path.join(VIDEO_DIR, meaningful_name)
                         try:
-                            os.rename(original_video, new_video_name)
-                            logger.info(f"Video saved as: {new_video_name}")
+                            os.rename(original_video, new_video_path)
+                            logger.info(f"Video saved as: {meaningful_name}")
+                            
+                            # Log video details for summary
+                            video_features = []
+                            if admin_logged_in:
+                                video_features.append("admin authentication")
+                                if any('/add/' in r['url'] for r in screenshot_results if r['success']):
+                                    video_features.append("icon picker interaction")
+                            
+                            video_description = f"Complete browser session recording"
+                            if video_features:
+                                video_description += f" including: {', '.join(video_features)}"
+                            
+                            logger.info(f"Video content: {video_description}")
+                            logger.info(f"Video covers {len([r for r in screenshot_results if r['success']])} pages")
+                            
                         except Exception as e:
                             logger.error(f"Failed to rename video: {e}")
                     else:
@@ -575,6 +632,22 @@ jobs:
                 successful = sum(1 for r in screenshot_results if r['success'])
                 total = len(screenshot_results)
                 logger.info(f"Successfully captured: {successful}/{total} screenshots")
+                
+                # Log video information
+                video_files = [f for f in os.listdir(VIDEO_DIR) if f.endswith('.webm')] if os.path.exists(VIDEO_DIR) else []
+                if video_files:
+                    logger.info(f"Video recorded: {len(video_files)} file(s)")
+                    for video_file in video_files:
+                        logger.info(f"🎬 Video: {video_file}")
+                        # Extract meaningful info from filename
+                        if "full_admin_demo" in video_file:
+                            logger.info("   ↳ Includes: Admin login + icon picker demo")
+                        elif "public_pages_only" in video_file:
+                            logger.info("   ↳ Includes: Public pages only (no admin access)")
+                        if "icon_picker_interaction" in video_file:
+                            logger.info("   ↳ Features: Icon picker field interaction")
+                else:
+                    logger.warning("No video files were created")
                 
                 for result in screenshot_results:
                     status = "✓" if result['success'] else "✗"
@@ -592,9 +665,9 @@ jobs:
             main()
         EOF
 
-    - name: Take screenshots and record video with enhanced icon picker interaction
+    - name: Take screenshots and record video with meaningful naming
       run: |
-        echo "=== Starting screenshot capture and video recording with enhanced icon picker interaction ==="
+        echo "=== Starting screenshot capture and video recording with meaningful naming ==="
         python take_screenshots_with_video.py
       env:
         DJANGO_SUPERUSER_USERNAME: screenshots
@@ -631,7 +704,7 @@ jobs:
           echo "No screenshot process log found"
         fi
         
-        # Create a summary log
+        # Create a summary log with video information
         cat > logs/summary.log << EOF
         Screenshot and Video Capture Summary
         ====================================
@@ -642,11 +715,16 @@ jobs:
         Django Log Level: $DJANGO_LOG_LEVEL
         
         Test Data: 40 diverse icon examples loaded from fixtures
-        Enhanced Features: Icon picker interaction, form filling, and video recording
+        Enhanced Features: Icon picker interaction, form filling, and meaningful video naming
         
         Files Generated:
         $(find screenshots -name "*.png" 2>/dev/null | sort || echo "No screenshots found")
         $(find videos -name "*.webm" 2>/dev/null | sort || echo "No videos found")
+        
+        Video Naming Convention:
+        - django_icon_picker_[demo_type]_[page_count]_pages_[features]_[timestamp].webm
+        - demo_type: full_admin_demo | public_pages_only  
+        - features: login_icon_picker_interaction (when applicable)
         
         Log Files:
         $(find logs -name "*.log" 2>/dev/null | sort || echo "No log files found")
@@ -679,7 +757,7 @@ jobs:
         path: logs/
         retention-days: 30
 
-    - name: Display log summary
+    - name: Display log summary with video details
       if: always()
       run: |
         echo "=== LOG SUMMARY ==="
@@ -698,7 +776,14 @@ jobs:
         echo ""
         echo "=== VIDEO FILES ==="
         if [ -d videos ]; then
+          echo "Videos with meaningful names:"
           ls -la videos/
+          echo ""
+          echo "Video naming explanation:"
+          echo "- Files include test scope (full_admin_demo vs public_pages_only)"
+          echo "- Page count indicates coverage (e.g., 5_pages)"
+          echo "- Features tested (login, icon_picker_interaction)"
+          echo "- Timestamp for uniqueness"
         else
           echo "No videos directory found"
         fi
